@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  # MongoDB service (primary database for HRMS backend)
+  mongo:
+    image: mongo:6.0
+    container_name: hrms-mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # Redis service (caching and queues)
+  redis:
+    image: redis:alpine
+    container_name: hrms-redis
+    ports:
+      - "6379:6379"
+
+  # Postgres service (optional database, compliance matching architecture)
+  postgres:
+    image: postgres:alpine
+    container_name: hrms-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hr_os
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # RabbitMQ service (event and broker queues)
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: hrms-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # HRMS API Server
+  hrms-backend:
+    build:
+      context: ./HRMS/hr_os_backend
+      dockerfile: Dockerfile
+    container_name: hrms-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DEV_AUTH_BYPASS=false
+      - JWT_SECRET=hrms-secret-key-change-in-production-2026
+      - MONGO_PROFILE=${MONGO_PROFILE:-remote}
+      - MONGO_REMOTE_URI=${MONGO_REMOTE_URI:-mongodb://host.docker.internal:27017}
+      - MONGO_REMOTE_DB=${MONGO_REMOTE_DB:-hr_onboarding}
+      - MONGO_REQUIRED=true
+      - DEFAULT_ENTITY_ID=Zipaworld
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+      - rabbitmq
+    command: >
+      sh -c "python seed_mongo.py && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+  # React Frontend Web Client
+  frontend:
+    build:
+      context: ./HRMS/hr_os_frontend
+      dockerfile: Dockerfile
+    container_name: hrms-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+      - VITE_DEV_AUTH_BYPASS=false
+    depends_on:
+      - hrms-backend
+
+  # BioMax Scanner Simulator
+  biomax-simulator:
+    build:
+      context: ./biomax_simulator
+      dockerfile: Dockerfile
+    container_name: biomax-simulator
+    ports:
+      - "8001:8001"
+    environment:
+      - HRMS_API_URL=http://hrms-backend:8000
+      - DEVICE_SERIAL=BX_DEVICE_01
+      - PUSH_MODE=true
+    depends_on:
+      - hrms-backend
+
+  # Attendance Bridge worker (sync agent)
+  attendance-worker:
+    build:
+      context: ./attendance_worker
+      dockerfile: Dockerfile
+    container_name: hrms-attendance-worker
+    environment:
+      - SIMULATOR_URL=http://biomax-simulator:8001
+      - HRMS_API_URL=http://hrms-backend:8000
+      - POLL_INTERVAL=10
+      - DEVICE_SERIAL=BX_DEVICE_01
+    depends_on:
+      - biomax-simulator
+      - hrms-backend
+
+volumes:
+  mongo_data:
+  postgres_data:

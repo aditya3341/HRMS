@@ -1,0 +1,607 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap');
+
+.teambridge-root {
+  --tb-bg: #f7f6f3;
+  --tb-surface: #ffffff;
+  --tb-surface2: #f0efe9;
+  --tb-border: rgba(0,0,0,0.08);
+  --tb-border2: rgba(0,0,0,0.14);
+  --tb-text: #1a1a1a;
+  --tb-text2: #5a5a5a;
+  --tb-text3: #9a9a9a;
+  --tb-accent: #6C5CE7;
+  --tb-accent-bg: #f0eeff;
+  --tb-accent-dark: #4a3fc0;
+  --tb-green: #00B894;
+  --tb-green-bg: #e0faf3;
+  --tb-amber: #FDCB6E;
+  --tb-amber-bg: #fff8e6;
+  --tb-amber-dark: #856100;
+  --tb-red: #E17055;
+  --tb-red-bg: #fff0ec;
+  --tb-red-dark: #923d25;
+  --tb-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --tb-shadow2: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+/* ── SHELL ── */
+.teambridge-root .tb-shell {
+  display: flex;
+  height: calc(100vh - 4rem);
+  background: var(--tb-bg);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--tb-text);
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: var(--tb-shadow2);
+}
+
+/* ── SIDEBAR ── */
+.teambridge-root .tb-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--tb-surface);
+  border-right: 1px solid var(--tb-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px 0 0 12px;
+}
+.teambridge-root .tb-sidebar-brand {
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid var(--tb-border);
+}
+.teambridge-root .tb-brand-name {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: var(--tb-accent);
+}
+.teambridge-root .tb-brand-sub {
+  font-size: 11px;
+  color: var(--tb-text3);
+  margin-top: 1px;
+}
+.teambridge-root .tb-sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 8px;
+}
+.teambridge-root .tb-sidebar-scroll::-webkit-scrollbar { width: 4px; }
+.teambridge-root .tb-sidebar-scroll::-webkit-scrollbar-thumb { background: var(--tb-border2); border-radius: 4px; }
+
+.teambridge-root .tb-section-hd {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--tb-text3);
+  text-transform: uppercase;
+  padding: 14px 18px 5px;
+}
+.teambridge-root .tb-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 18px;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background .12s;
+  position: relative;
+}
+.teambridge-root .tb-nav-item:hover { background: var(--tb-surface2); }
+.teambridge-root .tb-nav-item.active {
+  background: var(--tb-accent-bg);
+}
+.teambridge-root .tb-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 3px;
+  background: var(--tb-accent);
+  border-radius: 0 3px 3px 0;
+}
+.teambridge-root .tb-nav-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.teambridge-root .tb-nav-label { flex: 1; font-size: 13px; font-weight: 400; }
+.teambridge-root .tb-nav-item.active .tb-nav-label { font-weight: 500; color: var(--tb-accent-dark); }
+.teambridge-root .tb-nav-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 20px;
+  min-width: 18px;
+  text-align: center;
+}
+.teambridge-root .tb-badge-red { background: #fde8e3; color: #c0392b; }
+.teambridge-root .tb-badge-amber { background: var(--tb-amber-bg); color: var(--tb-amber-dark); }
+.teambridge-root .tb-badge-purple { background: var(--tb-accent-bg); color: var(--tb-accent); }
+.teambridge-root .tb-dm-avatar-sm {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 600;
+  flex-shrink: 0;
+}
+.teambridge-root .tb-sidebar-footer {
+  padding: 12px 18px;
+  border-top: 1px solid var(--tb-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.teambridge-root .tb-me-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.teambridge-root .tb-me-avatar:hover { opacity: .8; }
+.teambridge-root .tb-me-info { flex: 1; min-width: 0; }
+.teambridge-root .tb-me-name { font-size: 12px; font-weight: 500; color: var(--tb-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.teambridge-root .tb-me-dept { font-size: 10px; color: var(--tb-text3); }
+.teambridge-root .tb-switch-btn {
+  font-size: 10px;
+  border: 1px solid var(--tb-border2);
+  background: none;
+  border-radius: 6px;
+  padding: 3px 7px;
+  cursor: pointer;
+  color: var(--tb-text2);
+  white-space: nowrap;
+}
+.teambridge-root .tb-switch-btn:hover { background: var(--tb-surface2); }
+
+/* ── MAIN ── */
+.teambridge-root .tb-main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+.teambridge-root .tb-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  background: var(--tb-surface);
+  border-bottom: 1px solid var(--tb-border);
+  flex-shrink: 0;
+}
+.teambridge-root .tb-topbar-left { display: flex; align-items: center; gap: 10px; }
+.teambridge-root .tb-channel-name { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+.teambridge-root .tb-channel-meta { font-size: 11px; color: var(--tb-text3); }
+.teambridge-root .tb-topbar-actions { display: flex; gap: 6px; }
+.teambridge-root .tb-icon-btn {
+  width: 32px; height: 32px;
+  border: 1px solid var(--tb-border);
+  background: none;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--tb-text2);
+  font-size: 15px;
+  transition: background .1s;
+}
+.teambridge-root .tb-icon-btn:hover { background: var(--tb-surface2); }
+.teambridge-root .tb-icon-btn.alert { border-color: var(--tb-red); color: var(--tb-red); }
+
+/* ── TABS ── */
+.teambridge-root .tb-tabs {
+  display: flex;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--tb-border);
+  background: var(--tb-surface);
+  flex-shrink: 0;
+  gap: 2px;
+}
+.teambridge-root .tb-tab-btn {
+  font-size: 12px;
+  font-weight: 400;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: var(--tb-text3);
+  display: flex; align-items: center; gap: 5px;
+  transition: color .1s;
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+}
+.teambridge-root .tb-tab-btn:hover { color: var(--tb-text2); }
+.teambridge-root .tb-tab-btn.active { color: var(--tb-accent); border-bottom-color: var(--tb-accent); font-weight: 500; }
+.teambridge-root .tb-tab-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--tb-red); display: inline-block; }
+
+/* ── CHAT ── */
+.teambridge-root .tb-chat-feed {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.teambridge-root .tb-chat-feed::-webkit-scrollbar { width: 5px; }
+.teambridge-root .tb-chat-feed::-webkit-scrollbar-thumb { background: var(--tb-border2); border-radius: 4px; }
+
+.teambridge-root .tb-msg-row { display: flex; gap: 10px; align-items: flex-start; animation: tbFadeUp .2s ease; }
+@keyframes tbFadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.teambridge-root .tb-msg-row.own { flex-direction: row-reverse; }
+
+.teambridge-root .tb-msg-ava {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.teambridge-root .tb-msg-col { display: flex; flex-direction: column; max-width: 460px; }
+.teambridge-root .tb-msg-row.own .tb-msg-col { align-items: flex-end; }
+
+.teambridge-root .tb-msg-meta-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+.teambridge-root .tb-msg-row.own .tb-msg-meta-row { flex-direction: row-reverse; }
+.teambridge-root .tb-msg-sender { font-size: 12px; font-weight: 500; }
+.teambridge-root .tb-msg-dept-tag {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.teambridge-root .tb-msg-time { font-size: 10px; color: var(--tb-text3); }
+
+.teambridge-root .tb-bubble {
+  font-size: 13.5px;
+  line-height: 1.55;
+  padding: 9px 13px;
+  border-radius: 4px 14px 14px 14px;
+  background: var(--tb-surface2);
+  color: var(--tb-text);
+  word-break: break-word;
+}
+.teambridge-root .tb-msg-row.own .tb-bubble {
+  border-radius: 14px 4px 14px 14px;
+  background: var(--tb-accent);
+  color: #fff;
+}
+
+/* ── APPROVAL CARD ── */
+.teambridge-root .tb-appr-card {
+  border: 1px solid var(--tb-border2);
+  border-radius: 14px;
+  background: var(--tb-surface);
+  padding: 14px;
+  margin-top: 7px;
+  width: 300px;
+  box-shadow: var(--tb-shadow);
+}
+.teambridge-root .tb-appr-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.teambridge-root .tb-appr-icon { font-size: 18px; }
+.teambridge-root .tb-appr-title { font-size: 13px; font-weight: 600; }
+.teambridge-root .tb-appr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px; margin-bottom: 12px; }
+.teambridge-root .tb-appr-k { font-size: 10px; color: var(--tb-text3); }
+.teambridge-root .tb-appr-v { font-size: 12px; font-weight: 500; color: var(--tb-text); }
+.teambridge-root .tb-appr-btns { display: flex; gap: 8px; }
+.teambridge-root .tb-btn-approve {
+  flex: 1;
+  background: var(--tb-green-bg);
+  color: #006e50;
+  border: 1px solid #a8e6d8;
+  border-radius: 8px;
+  padding: 7px 0;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .1s;
+}
+.teambridge-root .tb-btn-approve:hover { background: #c0f0e2; }
+.teambridge-root .tb-btn-reject {
+  flex: 1;
+  background: var(--tb-red-bg);
+  color: var(--tb-red-dark);
+  border: 1px solid #f5c4b0;
+  border-radius: 8px;
+  padding: 7px 0;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .1s;
+}
+.teambridge-root .tb-btn-reject:hover { background: #fdddd5; }
+.teambridge-root .tb-btn-disabled {
+  flex: 1;
+  background: var(--tb-surface2);
+  color: var(--tb-text3);
+  border: 1px solid var(--tb-border);
+  border-radius: 8px;
+  padding: 7px 0;
+  font-size: 12px;
+  cursor: not-allowed;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── REMINDER STRIP ── */
+.teambridge-root .tb-reminder-strip {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: var(--tb-amber-bg);
+  border: 1px solid #f5d98a;
+  border-left: 3px solid var(--tb-amber);
+  border-radius: 10px;
+  padding: 9px 12px;
+  margin-top: 6px;
+  width: 300px;
+  animation: tbPulse .4s ease;
+}
+@keyframes tbPulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+.teambridge-root .tb-reminder-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.teambridge-root .tb-reminder-text { font-size: 12px; color: var(--tb-amber-dark); line-height: 1.45; }
+.teambridge-root .tb-reminder-text strong { font-weight: 600; }
+
+/* ── STATUS PILL ── */
+.teambridge-root .tb-status-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 5px;
+}
+.teambridge-root .tb-pill-pending { background: var(--tb-amber-bg); color: var(--tb-amber-dark); }
+.teambridge-root .tb-pill-approved { background: var(--tb-green-bg); color: #006e50; }
+.teambridge-root .tb-pill-rejected { background: var(--tb-red-bg); color: var(--tb-red-dark); }
+
+/* ── INPUT BAR ── */
+.teambridge-root .tb-input-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--tb-border);
+  background: var(--tb-surface);
+  flex-shrink: 0;
+}
+.teambridge-root .tb-chat-input {
+  flex: 1;
+  border: 1px solid var(--tb-border2);
+  border-radius: 24px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--tb-surface2);
+  color: var(--tb-text);
+  outline: none;
+  transition: border-color .15s;
+}
+.teambridge-root .tb-chat-input:focus { border-color: var(--tb-accent); background: var(--tb-surface); }
+.teambridge-root .tb-send-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--tb-accent);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background .1s, transform .1s;
+  flex-shrink: 0;
+}
+.teambridge-root .tb-send-btn:hover { background: var(--tb-accent-dark); }
+.teambridge-root .tb-send-btn:active { transform: scale(.94); }
+.teambridge-root .tb-send-btn:disabled { background: var(--tb-border2); cursor: not-allowed; }
+
+/* ── APPROVALS PANEL ── */
+.teambridge-root .tb-approvals-panel { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.teambridge-root .tb-approvals-panel::-webkit-scrollbar { width: 5px; }
+.teambridge-root .tb-approvals-panel::-webkit-scrollbar-thumb { background: var(--tb-border2); border-radius: 4px; }
+
+.teambridge-root .tb-appr-list-item {
+  background: var(--tb-surface);
+  border: 1px solid var(--tb-border2);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: var(--tb-shadow);
+  display: flex; gap: 14px; align-items: flex-start;
+  animation: tbFadeUp .2s ease;
+}
+.teambridge-root .tb-appr-item-body { flex: 1; }
+.teambridge-root .tb-appr-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.teambridge-root .tb-appr-item-title { font-size: 14px; font-weight: 600; }
+.teambridge-root .tb-appr-item-meta { font-size: 12px; color: var(--tb-text2); margin-top: 2px; }
+.teambridge-root .tb-appr-item-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.teambridge-root .tb-appr-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: var(--tb-surface2);
+  color: var(--tb-text2);
+  border: 1px solid var(--tb-border);
+}
+.teambridge-root .tb-appr-item-btns { display: flex; gap: 8px; margin-top: 12px; }
+.teambridge-root .tb-reminder-count {
+  font-size: 11px;
+  display: flex; align-items: center; gap: 4px;
+  color: var(--tb-amber-dark);
+  background: var(--tb-amber-bg);
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 6px;
+  width: fit-content;
+}
+
+/* ── NEW APPROVAL MODAL ── */
+.teambridge-root .tb-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  animation: tbFadeIn .15s ease;
+}
+@keyframes tbFadeIn { from{opacity:0} to{opacity:1} }
+.teambridge-root .tb-modal {
+  background: var(--tb-surface);
+  border-radius: 18px;
+  padding: 24px;
+  width: 420px;
+  max-width: 95vw;
+  box-shadow: var(--tb-shadow2);
+  animation: tbSlideUp .18s ease;
+}
+@keyframes tbSlideUp { from{transform:translateY(12px);opacity:0} to{transform:none;opacity:1} }
+.teambridge-root .tb-modal-title { font-size: 16px; font-weight: 600; margin-bottom: 18px; }
+.teambridge-root .tb-form-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+.teambridge-root .tb-form-label { font-size: 11px; font-weight: 500; color: var(--tb-text2); text-transform: uppercase; letter-spacing: .05em; }
+.teambridge-root .tb-form-input,
+.teambridge-root .tb-form-select {
+  border: 1px solid var(--tb-border2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--tb-surface2);
+  color: var(--tb-text);
+  outline: none;
+  transition: border-color .15s;
+}
+.teambridge-root .tb-form-input:focus,
+.teambridge-root .tb-form-select:focus { border-color: var(--tb-accent); background: var(--tb-surface); }
+.teambridge-root .tb-modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+.teambridge-root .tb-btn-primary {
+  flex: 1;
+  background: var(--tb-accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .1s;
+}
+.teambridge-root .tb-btn-primary:hover { background: var(--tb-accent-dark); }
+.teambridge-root .tb-btn-secondary {
+  flex: 1;
+  background: var(--tb-surface2);
+  color: var(--tb-text2);
+  border: 1px solid var(--tb-border2);
+  border-radius: 10px;
+  padding: 10px 0;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+.teambridge-root .tb-btn-secondary:hover { background: var(--tb-border); }
+
+/* ── USER SWITCHER MODAL ── */
+.teambridge-root .tb-user-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.teambridge-root .tb-user-card {
+  border: 1px solid var(--tb-border2);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  transition: background .1s;
+}
+.teambridge-root .tb-user-card:hover { background: var(--tb-surface2); }
+.teambridge-root .tb-user-card.selected { border-color: var(--tb-accent); background: var(--tb-accent-bg); }
+.teambridge-root .tb-uc-info { flex: 1; min-width: 0; }
+.teambridge-root .tb-uc-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.teambridge-root .tb-uc-dept { font-size: 10px; color: var(--tb-text3); }
+
+/* ── MEMBERS TAB ── */
+.teambridge-root .tb-members-panel { flex: 1; overflow-y: auto; padding: 20px; }
+.teambridge-root .tb-dept-members-group { margin-bottom: 20px; }
+.teambridge-root .tb-dept-members-hd {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid var(--tb-border);
+  margin-bottom: 8px;
+}
+.teambridge-root .tb-member-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  padding-left: 4px;
+  transition: background .1s;
+}
+.teambridge-root .tb-member-row:hover { background: var(--tb-surface2); padding-left: 8px; }
+.teambridge-root .tb-member-ava {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  flex-shrink: 0;
+}
+.teambridge-root .tb-member-name { font-size: 13px; font-weight: 400; }
+.teambridge-root .tb-member-role { font-size: 10px; color: var(--tb-text3); }
+
+/* ── EMPTY STATES ── */
+.teambridge-root .tb-empty-state {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 10px; color: var(--tb-text3);
+}
+.teambridge-root .tb-empty-icon { font-size: 36px; }
+.teambridge-root .tb-empty-text { font-size: 14px; }
+
+/* ── SYSTEM MSG ── */
+.teambridge-root .tb-sys-msg {
+  text-align: center;
+  font-size: 11px;
+  color: var(--tb-text3);
+  padding: 4px 0;
+}
+.teambridge-root .tb-sys-msg span {
+  background: var(--tb-surface2);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── ATTACHMENT AND FILE SHARING STYLES ── */
+.teambridge-root .tb-attachment-img-preview img {
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.teambridge-root .tb-attachment-img-preview img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.teambridge-root .tb-attachment-file-card {
+  border: 1px solid var(--tb-border);
+  border-radius: 10px;
+  background: var(--tb-surface) !important;
+  transition: background 0.15s, border-color 0.15s;
+}
+.teambridge-root .tb-attachment-file-card:hover {
+  background: var(--tb-accent-bg) !important;
+  border-color: var(--tb-accent);
+}
+
+.teambridge-root .tb-chat-attachment-preview-bar {
+  animation: tbFadeUp 0.15s ease;
+}
+
+.teambridge-root .tb-bubble-attachment {
+  max-width: 320px;
+}
+
+/* Adjust general approval card inside bubbles */
+.teambridge-root .tb-appr-card {
+  width: 320px;
+  border-radius: 14px;
+  border: 1px solid var(--tb-border2);
+  box-shadow: var(--tb-shadow);
+  padding: 16px;
+}
+.teambridge-root .tb-appr-desc {
+  color: var(--tb-text2);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+/* Loading animations */
+.teambridge-root .tb-attachment-loading {
+  animation: tbPulse 1.5s infinite ease-in-out;
+}
