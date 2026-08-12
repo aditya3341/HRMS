@@ -2,11 +2,10 @@ services:
   - type: web
     name: hrms-backend
     runtime: python
+    rootDir: hr_os_backend
     buildCommand: pip install -r requirements.txt
-    startCommand: cd hr_os_backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: PYTHONPATH
-        value: hr_os_backend
       - key: MONGO_PROFILE
         value: remote
       - key: MONGO_REMOTE_URI
