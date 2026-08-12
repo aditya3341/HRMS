@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: hrms-backend
+    runtime: python
+    rootDir: hr_os_backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: MONGO_PROFILE
+        value: remote
+      - key: MONGO_REMOTE_URI
+        sync: false
+      - key: MONGO_REMOTE_DB
+        value: hr_onboarding
+      - key: MONGO_REQUIRED
+        value: "true"
+      - key: JWT_SECRET
+        value: hrms-secret-key-change-in-production-2026
+      - key: DEFAULT_ENTITY_ID
+        value: Zipaworld
+      - key: DEV_AUTH_BYPASS
+        value: "false"
