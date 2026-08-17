@@ -5,6 +5,7 @@ services:
     rootDir: hr_os_backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
     envVars:
       - key: MONGO_PROFILE
         value: remote
